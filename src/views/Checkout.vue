@@ -176,14 +176,6 @@ function handleBooking() {
     totalPrice: cart.totalPrice,
   })
 
-  const message = buildBookingMessage(order)
-
-  const toEmail = 'namarasa@gmail.com'
-  const subject = `Booking Namarasa - ${order.id}`
-  const mailUrl = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`
-
-  window.open(mailUrl, '_blank')
-
   router.push('/payment')
 }
 </script>

@@ -1,6 +1,9 @@
 <template>
   <section class="menu-section py-5">
     <div class="container">
+      <div v-if="cartAdded" class="alert alert-success cart-toast" role="alert">
+        Item berhasil ditambahkan ke keranjang.
+      </div>
       <div class="row g-4">
         <div class="col-12 col-lg-3">
           <div class="menu-sidebar p-3 p-lg-4">
@@ -71,6 +74,8 @@ const activeCategory = ref('All')
 const router = useRouter()
 const cart = useCartStore()
 const reservasi = useReservasiStore()
+const cartAdded = ref(false)
+let cartAddedTimer = null
 
 const items = ref([
   {
@@ -158,6 +163,13 @@ function formatPrice(value) {
 
 function addToCart(item) {
   cart.addItem(item)
+
+  cartAdded.value = true
+  if (cartAddedTimer) clearTimeout(cartAddedTimer)
+  cartAddedTimer = setTimeout(() => {
+    cartAdded.value = false
+    cartAddedTimer = null
+  }, 2000)
 }
 
 function goCheckout() {
@@ -173,6 +185,12 @@ function goCheckout() {
 <style scoped>
 .menu-section {
   background: #f7f4ef;
+}
+
+.cart-toast {
+  position: sticky;
+  top: 85px;
+  z-index: 10;
 }
 
 .menu-sidebar {
